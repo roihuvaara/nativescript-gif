@@ -2,10 +2,10 @@
 /// <reference path="gif.d.ts" />
 
 import definition = require("nativescript-gif");
-import view = require("ui/core/view");
+import { View } from "ui/core/view";
 import { PropertyMetadata } from "ui/core/proxy";
-import dependencyObservable = require("ui/core/dependency-observable");
-import platform = require("platform");
+import * as dependencyObservable from "ui/core/dependency-observable";
+import * as platform from "platform";
 import * as types from "utils/types";
 
 var SRC = "src";
@@ -13,22 +13,13 @@ var GIF = "Gif";
 var ISLOADING = "isLoading";
 
 // on Android we explicitly set propertySettings to None because android will invalidate its layout (skip unnecessary native call).
-var AffectsLayout = platform.device.os === platform.platformNames.android ? dependencyObservable.PropertyMetadataSettings.None : dependencyObservable.PropertyMetadataSettings.AffectsLayout;
+var AffectsLayout = platform.device.os === platform.platformNames.android ?
+    dependencyObservable.PropertyMetadataSettings.None : dependencyObservable.PropertyMetadataSettings.AffectsLayout;
 
-function onSrcPropertyChanged(data: dependencyObservable.PropertyChangeData) {
-    var gif = <Gif>data.object;
-    var value = data.newValue;
-
-    if (types.isString(value)) {
-        value = value.trim();
-        gif.src = value;
-    }
-}
-
-export class Gif extends view.View implements definition.Gif {
+export class GifCommon extends View implements definition.Gif {
 
     public static srcProperty = new dependencyObservable.Property(SRC, GIF,
-        new PropertyMetadata(undefined, dependencyObservable.PropertyMetadataSettings.None, onSrcPropertyChanged));
+        new PropertyMetadata(undefined, dependencyObservable.PropertyMetadataSettings.None, GifCommon.onSrcPropertyChanged));
 
     public static isLoadingProperty = new dependencyObservable.Property(ISLOADING, GIF,
         new PropertyMetadata(false, dependencyObservable.PropertyMetadataSettings.None));
@@ -37,15 +28,25 @@ export class Gif extends view.View implements definition.Gif {
         super(options);
     }
 
+    public static onSrcPropertyChanged = (data: dependencyObservable.PropertyChangeData) => {
+        var gif = <GifCommon>data.object;
+        var value = data.newValue;
+
+        if (types.isString(value)) {
+            value = value.trim();
+            gif.src = value;
+        }
+    }
+
     get src(): any {
-        return this._getValue(Gif.srcProperty);
+        return this._getValue(GifCommon.srcProperty);
     }
     set src(value: any) {
-        this._setValue(Gif.srcProperty, value);
+        this._setValue(GifCommon.srcProperty, value);
     }
 
     get isLoading(): boolean {
-        return this._getValue(Gif.isLoadingProperty);
+        return this._getValue(GifCommon.isLoadingProperty);
     }
 
 }

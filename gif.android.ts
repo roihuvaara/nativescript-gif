@@ -1,13 +1,11 @@
-import Common = require('./gif.common');
-import dependencyObservable = require("ui/core/dependency-observable");
-import proxy = require("ui/core/proxy");
-import utils = require("utils/utils")
-import view = require("ui/core/view");
-import fs = require("file-system");
-import application = require("application");
+import * as tnsGifModule from "./gif.common";
+import * as dependencyObservable from "ui/core/dependency-observable";
+import { PropertyMetadata } from "ui/core/proxy";
+
+import * as fs from "file-system";
 import * as http from "http";
 
-global.moduleMerge(Common, exports);
+global.moduleMerge(tnsGifModule, exports);
 
 function onSrcPropertyChanged(data: dependencyObservable.PropertyChangeData) {
     var gif = <Gif>data.object;
@@ -19,9 +17,9 @@ function onSrcPropertyChanged(data: dependencyObservable.PropertyChangeData) {
 }
 
 // register the setNativeValue callback
-(<proxy.PropertyMetadata>Common.Gif.srcProperty.metadata).onSetNativeValue = onSrcPropertyChanged;
+(<PropertyMetadata>tnsGifModule.GifCommon.srcProperty.metadata).onSetNativeValue = onSrcPropertyChanged;
 
-export class Gif extends Common.Gif {
+export class Gif extends tnsGifModule.GifCommon {
     private _android: pl.droidsonroids.gif.GifImageView;
     private _drawable: pl.droidsonroids.gif.GifDrawable;
 

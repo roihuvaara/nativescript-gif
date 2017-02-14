@@ -1,9 +1,9 @@
 {
-	"name": "nativescript-gif",
+	"name": "nativescript-gif-webpack",
 	"version": "1.0.8",
-	"description": "NativeScript plugin to use .gifs",
+	"description": "NativeScript plugin to use .gifs modified to work with webpack bundling",
 	"main": "gif",
-	"typings": "gif.d.ts",
+	"typings": "index.d.ts",
 	"nativescript": {
 		"platforms": {
 			"android": "1.7.0",
@@ -19,7 +19,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/bradmartin/nativescript-gif.git"
+		"url": "https://github.com/roihuvaara/nativescript-gif.git"
 	},
 	"keywords": [
 		"NativeScript",
@@ -35,6 +35,11 @@
 		"url": "https://github.com/bradmartin"
 	},
 	"contributors": [
+		{
+			"name": "Jukka Roihuvaara",
+			"email": "jukka.roihuvaara@vincit.fi",
+			"url": "https://github.com/roihuvaara"
+		},
 		{
 			"name": "Nathanael Anderson",
 			"email": "nathan@master-technology.com",

@@ -1,14 +1,13 @@
-import Common = require('./gif.common');
-import dependencyObservable = require("ui/core/dependency-observable");
-import proxy = require("ui/core/proxy");
-import { View } from "ui/core/view";
-import utils = require("utils/utils")
-import enums = require("ui/enums");
-import definition = require("nativescript-gif");
-import fs = require("file-system");
-import * as typesModule from "utils/types";
+import * as tnsGifModule from "./gif.common";
 
-global.moduleMerge(Common, exports);
+import * as dependencyObservable from "ui/core/dependency-observable";
+import { PropertyMetadata } from "ui/core/proxy";
+import { View } from "ui/core/view";
+
+import definition = require("nativescript-gif");
+import * as fs from "file-system";
+
+global.moduleMerge(tnsGifModule, exports);
 
 declare var FLAnimatedImageView: any, FLAnimatedImage: any, NSData: any, NSString: any, NSURL: any, CGRectMake: any;
 
@@ -23,9 +22,9 @@ function onSrcPropertyChanged(data: dependencyObservable.PropertyChangeData) {
 }
 
 // register the setNativeValue callback
-(<proxy.PropertyMetadata>Common.Gif.srcProperty.metadata).onSetNativeValue = onSrcPropertyChanged;
+(<PropertyMetadata>tnsGifModule.GifCommon.srcProperty.metadata).onSetNativeValue = onSrcPropertyChanged;
 
-export class Gif extends Common.Gif {
+export class Gif extends tnsGifModule.GifCommon {
     private _ios: FLAnimatedImageView;
     private _animatedImage: FLAnimatedImage;
 
